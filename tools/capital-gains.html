@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>양도소득세 간편 계산기 | 성화세무회계</title>
+<meta name="description" content="부동산을 팔 때 내는 양도소득세를 현행 세법 기준으로 간단히 계산해 봅니다. 입력 내용은 저장되지 않습니다.">
+<meta property="og:title" content="양도소득세 간편 계산기 | 성화세무회계">
+<meta property="og:description" content="부동산을 팔 때 내는 양도소득세를 현행 세법 기준으로 간단히 계산해 봅니다. 입력 내용은 저장되지 않습니다.">
+<meta name="naver-site-verification" content="da77f9f6b0d7e8907339557bed3bd34c94295641" />
+<link rel="canonical" href="https://kosh82788-alt.github.io/tools/capital-gains.html">
+<meta property="og:url" content="https://kosh82788-alt.github.io/tools/capital-gains.html">
+<meta property="og:image" content="https://kosh82788-alt.github.io/images/logo-horizontal.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="성화세무회계">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&display=swap">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="../index.html"><img src="../images/logo-horizontal.png" alt="성화세무회계" width="160" height="40"><small>세무사 고성화</small></a>
+    <nav><a href="../index.html#about">소개</a><a href="../index.html#services">업무분야</a><a href="../columns.html">세무칼럼</a><a href="../tools/capital-gains.html" aria-current="page">간편계산기</a><a href="../index.html#contact">상담문의</a></nav>
+    <a class="btn btn-sm btn-kakao" href="https://pf.kakao.com/_ibnGX/chat" target="_blank" rel="noopener">카카오톡 상담</a>
+  </div>
+</header>
+<main>
+<section class="section tool">
+  <div class="wrap narrow">
+    <p class="eyebrow">간편 계산기</p>
+    <h1>양도소득세 간편 계산</h1>
+    <p class="lead">부동산을 팔 때 내는 세금을 대략 계산해 봅니다. 화면을 벗어나지 않고 계산되며, <b>입력한 금액은 어디에도 저장되지 않습니다.</b></p>
+
+    <div class="calc">
+      <div class="field"><label for="asset">양도하는 자산</label>
+        <select id="asset">
+          <option value="house">주택 (조합원입주권 포함)</option>
+          <option value="right">분양권</option>
+          <option value="land">토지 · 건물 (주택 아님)</option>
+          <option value="idle">비사업용 토지</option>
+        </select>
+      </div>
+
+      <div class="grid2">
+        <div class="field"><label for="sale">양도가액 (판 금액)</label><input id="sale" type="text" inputmode="numeric" placeholder="예: 900,000,000"><span class="won" id="saleWon"></span></div>
+        <div class="field"><label for="buy">취득가액 (산 금액)</label><input id="buy" type="text" inputmode="numeric" placeholder="예: 500,000,000"><span class="won" id="buyWon"></span></div>
+        <div class="field"><label for="cost">필요경비 (취득세·중개수수료·자본적지출 등)</label><input id="cost" type="text" inputmode="numeric" placeholder="예: 20,000,000"><span class="won" id="costWon"></span></div>
+        <div class="field"><label for="hold">보유기간 (년)</label><input id="hold" type="number" min="0" step="0.1" placeholder="예: 7.5"></div>
+      </div>
+
+      <div id="houseOnly">
+        <div class="grid2">
+          <div class="field"><label for="live">거주기간 (년) <small>1세대 1주택일 때만</small></label><input id="live" type="number" min="0" step="0.1" placeholder="예: 3"></div>
+          <div class="field"><label for="heavy">조정대상지역 다주택 중과</label>
+            <select id="heavy">
+              <option value="0">적용 안 함</option>
+              <option value="0.2">2주택 중과 (기본세율 +20%p)</option>
+              <option value="0.3">3주택 이상 중과 (기본세율 +30%p)</option>
+            </select>
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" id="one"> 1세대 1주택 비과세 요건을 충족합니다 <small>(2년 이상 보유, 조정대상지역 취득분은 2년 이상 거주)</small></label>
+      </div>
+
+      <button id="run" class="btn">계산하기</button>
+    </div>
+
+    <div id="result" hidden>
+      <h2>계산 결과</h2>
+      <p class="note" id="summary"></p>
+      <table class="rows">
+        <tbody id="rows"></tbody>
+      </table>
+      <p class="total"><span>예상 세액 합계 <small>(양도소득세 + 지방소득세)</small></span><b id="total"></b></p>
+
+      <h2>이 결과가 달라지는 조건</h2>
+      <p class="note">아래 중 하나라도 해당되면 실제 세액이 크게 달라집니다. 해당되는 것을 눌러 보세요.</p>
+      <div class="faq" id="factors"></div>
+
+      <div class="readmore">
+        <p>해당되는 항목이 있다면, 실제 세액은 이 계산과 달라집니다.</p>
+        <div class="cta">
+          <a class="btn btn-kakao" href="https://pf.kakao.com/_ibnGX/chat" target="_blank" rel="noopener">카카오톡으로 상담하기</a>
+          <a class="btn btn-ghost" href="tel:01050638270">전화 상담 010-5063-8270</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="box disclaimer">
+      <b>계산 기준과 한계</b>
+      <ul>
+        <li>세율·공제는 <b>2026년 7월 1일 시행 소득세법</b> 기준입니다. (기본세율 제55조, 장기보유특별공제 제95조, 기본공제 제103조, 세율 제104조, 고가주택 12억 기준 시행령 제156조)</li>
+        <li>상담 참고용 <b>모의 계산</b>이며 신고용이 아닙니다. 감면·세액공제, 상속·증여로 취득한 경우의 취득가액 계산, 부담부증여, 1세대 판정, 일시적 2주택 등은 반영되지 않습니다.</li>
+        <li>조정대상지역 다주택 중과는 <b>한시 배제 기간</b>이 적용될 수 있어 직접 선택하도록 했습니다. 적용 여부는 양도 시점 기준으로 확인이 필요합니다.</li>
+        <li>이 계산기는 절세 효과나 환급 금액을 보장하지 않습니다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var BR = [[14000000,0.06,0],[50000000,0.15,1260000],[88000000,0.24,5760000],[150000000,0.35,15440000],[300000000,0.38,19940000],[500000000,0.40,25940000],[1000000000,0.42,35940000],[Infinity,0.45,65940000]];
+  var IDLE = [[14000000,0.16,0],[50000000,0.25,1260000],[88000000,0.34,5760000],[150000000,0.45,15440000],[300000000,0.48,19940000],[500000000,0.50,25940000],[1000000000,0.52,35940000],[Infinity,0.55,65940000]];
+  var HOLD1 = [[3,0],[4,0.06],[5,0.08],[6,0.10],[7,0.12],[8,0.14],[9,0.16],[10,0.18],[11,0.20],[12,0.22],[13,0.24],[14,0.26],[15,0.28],[Infinity,0.30]];
+  var HOLD2 = [[3,0],[4,0.12],[5,0.16],[6,0.20],[7,0.24],[8,0.28],[9,0.32],[10,0.36],[Infinity,0.40]];
+  var LIVE2 = [[2,0],[3,0.08],[4,0.12],[5,0.16],[6,0.20],[7,0.24],[8,0.28],[9,0.32],[10,0.36],[Infinity,0.40]];
+
+  var num = function (v) { return Number(String(v).replace(/[^0-9]/g, '')) || 0; };
+  var won = function (n) { return (Math.round(n) || 0).toLocaleString('ko-KR') + '원'; };
+  var rate = function (table, base) { for (var i = 0; i < table.length; i++) if (base <= table[i][0]) return table[i]; };
+  var pick = function (table, years) { for (var i = 0; i < table.length; i++) if (years < table[i][0]) return table[i][1]; return table[table.length - 1][1]; };
+  var tax = function (table, base) { var r = rate(table, base); return Math.max(0, base * r[1] - r[2]); };
+
+  ['sale', 'buy', 'cost'].forEach(function (id) {
+    var el = document.getElementById(id);
+    el.addEventListener('input', function () {
+      var n = num(el.value);
+      el.value = n ? n.toLocaleString('ko-KR') : '';
+      document.getElementById(id + 'Won').textContent = n ? hangul(n) : '';
+    });
+  });
+  function hangul(n) {
+    var units = [['조', 1e12], ['억', 1e8], ['만', 1e4]], out = '', rest = n;
+    units.forEach(function (u) { var q = Math.floor(rest / u[1]); if (q) { out += q + u[0] + ' '; rest -= q * u[1]; } });
+    if (rest) out += rest;
+    return out.trim() + (out ? '원' : '');
+  }
+
+  document.getElementById('asset').addEventListener('change', function () {
+    document.getElementById('houseOnly').hidden = this.value !== 'house';
+  });
+
+  var FACTORS = [
+    ['상속이나 증여로 받은 부동산인가요?', '취득가액을 실제 산 금액이 아니라 상속·증여 당시 평가액으로 봅니다. 배우자·직계존비속에게 증여받고 10년 이내에 팔면 증여자의 취득가액으로 계산하는 규정도 있습니다.'],
+    ['1세대 1주택인지 애매한가요?', '세대 분리 여부, 일시적 2주택, 상속주택, 농어촌주택, 임대주택 등에 따라 주택 수 판정이 달라집니다. 판정이 바뀌면 비과세와 중과가 한꺼번에 뒤집힙니다.'],
+    ['조정대상지역 다주택인가요?', '중과세율 적용 여부와 한시 배제 기간에 따라 세액이 크게 달라지고, 중과 대상이면 장기보유특별공제도 받지 못합니다.'],
+    ['취득할 때 쓴 비용 증빙이 남아 있나요?', '취득세, 중개수수료, 법무사비용, 샷시·확장 같은 자본적지출은 필요경비로 인정될 수 있습니다. 증빙 유무로 세액이 수백만 원 단위로 달라집니다.'],
+    ['같은 해에 다른 부동산도 팔았나요?', '같은 해 양도분은 합산해 과세하고 기본공제 250만원도 한 번만 적용됩니다.'],
+    ['재개발·재건축 입주권이나 분양권인가요?', '보유기간 기산일과 세율이 일반 주택과 다릅니다.'],
+    ['1년 이내 단기 양도인가요?', '보유기간이 며칠 차이로 세율 구간이 바뀝니다. 취득일과 양도일 기준을 정확히 따져야 합니다.']
+  ];
+
+  document.getElementById('run').addEventListener('click', function () {
+    var asset = document.getElementById('asset').value;
+    var sale = num(document.getElementById('sale').value);
+    var buy = num(document.getElementById('buy').value);
+    var cost = num(document.getElementById('cost').value);
+    var hold = Number(document.getElementById('hold').value) || 0;
+    var live = Number(document.getElementById('live').value) || 0;
+    var heavy = asset === 'house' ? Number(document.getElementById('heavy').value) : 0;
+    var one = asset === 'house' && document.getElementById('one').checked;
+
+    if (!sale) { alert('양도가액을 입력해 주세요.'); return; }
+
+    var rows = [], gain = Math.max(0, sale - buy - cost);
+    rows.push(['양도차익 (양도가액 − 취득가액 − 필요경비)', gain]);
+
+    var summary = '';
+    var taxableGain = gain, ratio = 1;
+    if (one) {
+      if (sale <= 1200000000) {
+        summary = '1세대 1주택 비과세 요건을 충족하고 양도가액이 12억원 이하라서, 양도소득세가 나오지 않습니다.';
+        show(rows, 0, 0, summary);
+        return;
+      }
+      ratio = (sale - 1200000000) / sale;
+      taxableGain = gain * ratio;
+      rows.push(['12억원 초과분 비율', Math.round(ratio * 1000) / 10 + '%']);
+      rows.push(['과세 대상 양도차익', taxableGain]);
+      summary = '1세대 1주택이지만 양도가액이 12억원을 넘어, 12억원을 초과하는 부분만 과세됩니다.';
+    }
+
+    // 장기보유특별공제 (중과 대상이면 배제)
+    var ltRate = 0;
+    if (hold >= 3 && !heavy && asset !== 'right') {
+      if (one && live >= 2) ltRate = Math.min(0.8, pick(HOLD2, hold) + pick(LIVE2, live));
+      else ltRate = pick(HOLD1, hold);
+    }
+    var ltAmount = taxableGain * ltRate;
+    if (ltRate) rows.push(['장기보유특별공제 (' + Math.round(ltRate * 1000) / 10 + '%)', -ltAmount]);
+    else if (heavy) rows.push(['장기보유특별공제', '중과 대상이라 적용 없음']);
+
+    var income = Math.max(0, taxableGain - ltAmount);
+    rows.push(['양도소득금액', income]);
+    var base = Math.max(0, income - 2500000);
+    rows.push(['양도소득 기본공제', -Math.min(2500000, income)]);
+    rows.push(['과세표준', base]);
+
+    // 세율 적용
+    var calc = 0, label = '';
+    var shortRate = 0;
+    if (asset === 'house' || asset === 'right') shortRate = hold < 1 ? 0.7 : (hold < 2 || asset === 'right' ? 0.6 : 0);
+    else shortRate = hold < 1 ? 0.5 : (hold < 2 ? 0.4 : 0);
+
+    if (asset === 'idle') {
+      var idleTax = tax(IDLE, base);
+      var shortTax = shortRate ? base * shortRate : 0;
+      calc = Math.max(idleTax, shortTax);
+      label = shortTax > idleTax ? '단기세율 ' + shortRate * 100 + '% (비사업용 토지 세율과 비교해 큰 세액)' : '비사업용 토지 세율 (16~55%)';
+    } else if (shortRate) {
+      var st = base * shortRate;
+      if (heavy) {
+        var ht = tax(BR, base) + base * heavy;
+        calc = Math.max(st, ht);
+        label = ht > st ? '기본세율 + ' + heavy * 100 + '%p (중과)' : '단기세율 ' + shortRate * 100 + '%';
+      } else { calc = st; label = '단기세율 ' + shortRate * 100 + '%'; }
+    } else if (heavy) {
+      calc = tax(BR, base) + base * heavy;
+      label = '기본세율 + ' + heavy * 100 + '%p (중과)';
+    } else {
+      calc = tax(BR, base);
+      label = '기본세율 (6~45%)';
+    }
+
+    rows.push(['적용 세율', label]);
+    rows.push(['양도소득세 (산출세액)', calc]);
+    rows.push(['지방소득세 (10%)', calc * 0.1]);
+    show(rows, calc, calc * 0.1, summary);
+  });
+
+  function show(rows, income, local, summary) {
+    var tbody = document.getElementById('rows');
+    tbody.innerHTML = rows.map(function (r) {
+      var v = typeof r[1] === 'number' ? (r[1] < 0 ? '− ' + won(-r[1]) : won(r[1])) : r[1];
+      return '<tr><th>' + r[0] + '</th><td>' + v + '</td></tr>';
+    }).join('');
+    document.getElementById('summary').textContent = summary || '입력하신 조건으로 계산한 결과입니다.';
+    document.getElementById('total').textContent = won(income + local);
+    document.getElementById('factors').innerHTML = FACTORS.map(function (f) {
+      return '<details><summary>' + f[0] + '</summary><p>' + f[1] + '</p></details>';
+    }).join('');
+    document.getElementById('result').hidden = false;
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+})();
+</script>
+
+</main>
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <img class="foot-logo" src="../images/logo-horizontal.png" alt="성화세무회계" width="140" height="35">
+      <p>세무사 고성화 · 서울시 서초구 방배천로10, 동화빌딩 605호</p>
+      <p>Tel 010-5063-8270 · mytaxpro@naver.com</p>
+    </div>
+    <div class="foot-links">
+      <a href="https://blog.naver.com/mytaxpro" target="_blank" rel="noopener">네이버 블로그</a>
+      <a href="../columns.html">세무칼럼</a>
+    </div>
+  </div>
+  <p class="wrap copy">© 2026 성화세무회계. 칼럼 내용은 작성 시점의 법령 기준이며, 개별 사안은 상담을 통해 확인해 주세요.</p>
+</footer>
+<div class="float-call"><a href="tel:01050638270">📞 전화 상담</a><a class="kakao" href="https://pf.kakao.com/_ibnGX/chat" target="_blank" rel="noopener">💬 카카오톡 상담</a></div>
+</body>
+</html>
