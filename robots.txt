@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://kosh82788-alt.github.io/mytaxpro/sitemap.xml
+Sitemap: https://kosh82788-alt.github.io/sitemap.xml
