@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>상속세 간편 계산기 | 성화세무회계</title>
+<meta name="description" content="상속재산과 가족 구성을 넣어 상속세를 현행 세법 기준으로 간단히 계산해 봅니다. 입력 내용은 저장되지 않습니다.">
+<meta property="og:title" content="상속세 간편 계산기 | 성화세무회계">
+<meta property="og:description" content="상속재산과 가족 구성을 넣어 상속세를 현행 세법 기준으로 간단히 계산해 봅니다. 입력 내용은 저장되지 않습니다.">
+<meta name="naver-site-verification" content="da77f9f6b0d7e8907339557bed3bd34c94295641" />
+<link rel="canonical" href="https://kosh82788-alt.github.io/tools/inheritance-tax.html">
+<meta property="og:url" content="https://kosh82788-alt.github.io/tools/inheritance-tax.html">
+<meta property="og:image" content="https://kosh82788-alt.github.io/images/logo-horizontal.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="성화세무회계">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&display=swap">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="../index.html"><img src="../images/logo-horizontal.png" alt="성화세무회계" width="160" height="40"><small>세무사 고성화</small></a>
+    <nav><a href="../index.html#about">소개</a><a href="../index.html#services">업무분야</a><a href="../columns.html">세무칼럼</a><details class="nav-drop"><summary aria-current="page">간편계산</summary><div class="nav-menu"><a href="../tools/capital-gains.html">양도소득세</a><a href="../tools/gift-tax.html">증여세</a><a href="../tools/inheritance-tax.html">상속세</a><a href="../tools/faithful-filing.html">성실신고확인 대상</a></div></details><a href="../index.html#contact">상담문의</a></nav>
+    <a class="btn btn-sm btn-kakao" href="https://pf.kakao.com/_ibnGX/chat" target="_blank" rel="noopener">카카오톡 상담</a>
+  </div>
+</header>
+<main>
+<section class="section tool">
+  <div class="wrap narrow">
+    <p class="eyebrow">간편 계산기</p>
+    <h1>상속세 간편 계산기</h1>
+    <p class="lead">물려받는 재산과 가족 구성을 넣으면 상속세를 현행 세법 기준으로 간단히 계산해 봅니다. 계산은 이 화면 안에서만 이루어지며, <b>아래 상담 신청을 하실 때만</b> 입력하신 내용이 세무사에게 함께 전달됩니다.</p>
+
+    <div class="calc">
+      <div class="field"><label for="heirs">상속인 구성</label>
+        <select id="heirs">
+          <option value="spouseChildren" selected>배우자 + 자녀</option>
+          <option value="childrenOnly">자녀만 (배우자 없음)</option>
+          <option value="spouseOnly">배우자 단독 상속</option>
+        </select>
+      </div>
+
+      <div class="field" id="childField"><label for="children">자녀 수</label>
+        <select id="children">
+          <option value="1">1명</option>
+          <option value="2" selected>2명</option>
+          <option value="3">3명</option>
+          <option value="4">4명</option>
+          <option value="5">5명</option>
+          <option value="6">6명 이상</option>
+        </select>
+      </div>
+
+      <div class="field"><label for="asset">상속재산가액 <small>(부동산·금융재산 등 전부)</small></label><input id="asset" type="text" inputmode="numeric" placeholder="예: 1,500,000,000"><span class="won" id="assetWon"></span></div>
+
+      <div class="field"><label for="fin">그중 순금융재산 <small>(예금·주식 등에서 금융채무를 뺀 금액 · 없으면 비워두세요)</small></label><input id="fin" type="text" inputmode="numeric" placeholder="예: 300,000,000"><span class="won" id="finWon"></span></div>
+
+      <div class="field"><label for="debt">채무 · 공과금 <small>(대출, 임대보증금, 미납 세금 등)</small></label><input id="debt" type="text" inputmode="numeric" placeholder="예: 200,000,000"><span class="won" id="debtWon"></span></div>
+
+      <div class="field"><label for="funeral">장례비용 <small>(비워두면 500만원으로 봅니다)</small></label><input id="funeral" type="text" inputmode="numeric" placeholder="예: 8,000,000"><span class="won" id="funeralWon"></span></div>
+
+      <div class="field" id="spouseField"><label for="spouseTake">배우자가 실제 상속받는 금액 <small>(없거나 5억원 미만이면 5억원을 공제합니다)</small></label><input id="spouseTake" type="text" inputmode="numeric" placeholder="예: 600,000,000"><span class="won" id="spouseTakeWon"></span></div>
+
+      <div class="field"><label for="prior">사전증여 재산가액 <small>(상속인에게 10년 내, 그 외에게 5년 내 · 없으면 비워두세요)</small></label><input id="prior" type="text" inputmode="numeric" placeholder="예: 200,000,000"><span class="won" id="priorWon"></span></div>
+
+      <div class="field"><label for="priorTax">그 증여의 증여세 <b>산출세액</b> <small>(없으면 비워두세요)</small></label><input id="priorTax" type="text" inputmode="numeric" placeholder="예: 20,000,000"><span class="won" id="priorTaxWon"></span></div>
+
+      <div class="field"><label for="skipRatio">손자녀 등이 받는 비율 <small>(자녀를 건너뛴 상속 · 해당 없으면 0)</small></label>
+        <select id="skipRatio">
+          <option value="0" selected>해당 없음</option>
+          <option value="0.25">전체 재산의 1/4 정도</option>
+          <option value="0.5">전체 재산의 1/2 정도</option>
+          <option value="1">전체 재산 모두</option>
+        </select>
+      </div>
+
+      <button id="run" class="btn">계산하기</button>
+    </div>
+
+    <div id="result" hidden>
+      <h2>계산 결과</h2>
+      <p class="note" id="summary"></p>
+      <table class="rows">
+        <tbody id="rows"></tbody>
+      </table>
+
+      <h2>이 결과가 달라지는 조건</h2>
+      <p class="note">아래 중 하나라도 해당되면 실제 세액이 달라집니다. 해당되는 것을 눌러 보세요.</p>
+      <div class="faq" id="factors"></div>
+
+      <div class="readmore">
+        <p>해당되는 항목이 있다면, 실제 세액은 이 계산과 달라질 수 있습니다.</p>
+        <div class="cta">
+          <a class="btn btn-kakao" href="https://pf.kakao.com/_ibnGX/chat" target="_blank" rel="noopener">카카오톡으로 상담하기</a>
+          <a class="btn btn-ghost" href="tel:01050638270">전화 상담 010-5063-8270</a>
+        </div>
+      </div>
+
+      <h2>내 사례로 정확히 확인받기</h2>
+      <p class="note">남겨주시면 세무사가 직접 연락드립니다. <b>위에서 계산한 내용(입력 값과 결과)도 함께 전달</b>되어, 통화할 때 바로 짚어드릴 수 있습니다.</p>
+      <p class="note" id="calcSummary"></p>
+      <form class="calc lead-form" action="https://formsubmit.co/mytaxpro@naver.com" method="POST">
+        <input type="hidden" name="_subject" value="[홈페이지] 상속세 상담 신청">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="https://kosh82788-alt.github.io/tools/thanks.html">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="계산_상속인구성" id="h_heirs">
+        <input type="hidden" name="계산_상속재산가액" id="h_asset">
+        <input type="hidden" name="계산_채무" id="h_debt">
+        <input type="hidden" name="계산_공제합계" id="h_deduct">
+        <input type="hidden" name="계산_과세표준" id="h_base">
+        <input type="hidden" name="계산_예상세액" id="h_tax">
+        <input type="hidden" name="계산_결과" id="h_result">
+        <div class="grid2">
+          <div class="field"><label for="name">이름</label><input id="name" name="이름" type="text" required placeholder="홍길동"></div>
+          <div class="field"><label for="phone">연락처</label><input id="phone" name="연락처" type="tel" required placeholder="010-0000-0000"></div>
+          <div class="field"><label for="way">연락 방법</label>
+            <select id="way" name="연락방법">
+              <option>전화</option>
+              <option>카카오톡</option>
+              <option>아무거나 편한 방법</option>
+            </select>
+          </div>
+          <div class="field"><label for="kind">상속재산 종류</label>
+            <select id="kind" name="재산종류">
+              <option>부동산</option>
+              <option>현금 · 예금</option>
+              <option>주식 · 펀드</option>
+              <option>사업체 지분 (가업상속)</option>
+              <option>여러 가지가 섞여 있음</option>
+            </select>
+          </div>
+          <div class="field"><label for="when">상속 진행 상황</label>
+            <select id="when" name="진행상황">
+              <option>이미 상속이 개시됨 (신고기한 임박)</option>
+              <option>상속이 개시됐고 시간은 남음</option>
+              <option>아직 개시 전 · 미리 준비하고 싶음</option>
+              <option>분쟁·분할 협의 중</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label for="memo">추가로 알려주실 내용 <small>(선택)</small></label><textarea id="memo" name="문의내용" rows="3" placeholder="예: 아버지 명의 아파트와 상가가 있고 어머니가 생존해 계십니다"></textarea></div>
+        <label class="check"><input type="checkbox" name="개인정보동의" value="동의함" required> 개인정보 수집·이용에 동의합니다 <small>(이름·연락처·재산 종류·문의 내용을 상담 연락 목적으로 수집하며, 상담 종료 후 1년간 보관 후 파기합니다. 동의를 거부하실 수 있으나 상담 연락이 어렵습니다. <a href="privacy.html">개인정보 처리방침</a>)</small></label>
+        <button type="submit" class="btn">상담 신청하기</button>
+      </form>
+    </div>
+
+    <div class="box disclaimer">
+      <b>계산 기준과 한계</b>
+      <ul>
+        <li>세율과 공제는 <b>상속세 및 증여세법</b> 현행 규정 기준입니다. (기초공제 제18조, 배우자공제 제19조, 인적공제 제20조, 일괄공제 제21조, 금융재산공제 제22조, 세율 제26조, 세대생략 할증 제27조, 증여세액공제 제28조, 신고세액공제 제69조)</li>
+        <li>인적공제는 <b>자녀 수만</b> 반영했습니다. 미성년자·65세 이상·장애인 공제가 있으면 인적공제 합계가 커져 일괄공제 5억원보다 유리해질 수 있습니다.</li>
+        <li>배우자 상속공제 한도는 <b>법정상속분(배우자 1.5 : 자녀 각 1)</b>으로 계산했습니다. 상속 포기자가 있거나 상속인이 아닌 사람이 유증을 받은 경우에는 시행령의 한도 계산이 달라집니다.</li>
+        <li>배우자 상속공제는 실무에서 통용되는 <b>최소 5억원 보장</b>으로 계산했습니다. 법정상속분 한도가 5억원보다 작은 경우 세무서와 견해가 다를 수 있어, 그런 사례는 상담에서 따로 확인하셔야 합니다.</li>
+        <li>가업상속공제·영농상속공제·동거주택 상속공제는 요건이 까다로워 <b>반영하지 않았습니다.</b> 해당되면 공제액이 크게 달라지니 상담에서 확인하세요.</li>
+        <li>세대생략 할증은 30%로 계산합니다. 손자녀가 미성년자이고 받는 재산이 20억원을 넘으면 40%로 올라갑니다.</li>
+        <li>재산 평가액(시가), 추정상속재산, 연부연납·물납은 반영하지 않았습니다.</li>
+        <li>이 계산기는 상담 참고용 <b>모의 계산</b>이며 신고용이 아닙니다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  // 상속세 세율 (상증법 제26조) — [과세표준 상한, 세율, 누진공제]
+  var BR = [
+    [100000000, 0.10, 0],
+    [500000000, 0.20, 10000000],
+    [1000000000, 0.30, 60000000],
+    [3000000000, 0.40, 160000000],
+    [Infinity, 0.50, 460000000]
+  ];
+  var BASIC = 200000000;        // 기초공제 (제18조)
+  var LUMP = 500000000;         // 일괄공제 (제21조)
+  var PER_CHILD = 50000000;     // 자녀 1명당 인적공제 (제20조①1호)
+  var SPOUSE_MIN = 500000000;   // 배우자공제 최저 (제19조④)
+  var SPOUSE_MAX = 3000000000;  // 배우자공제 한도 (제19조①2호)
+  var FIN_MAX = 200000000;      // 금융재산공제 한도 (제22조)
+  var FUNERAL_MIN = 5000000, FUNERAL_MAX = 10000000; // 시행령 제9조②
+
+  var num = function (v) { return Number(String(v).replace(/[^0-9]/g, '')) || 0; };
+  var won = function (n) { return (Math.round(n) || 0).toLocaleString('ko-KR') + '원'; };
+  function hangul(n) {
+    var units = [['조', 1e12], ['억', 1e8], ['만', 1e4]], out = '', rest = n;
+    units.forEach(function (u) { var q = Math.floor(rest / u[1]); if (q) { out += q + u[0] + ' '; rest -= q * u[1]; } });
+    if (rest) out += rest;
+    return out.trim() + (out ? '원' : '');
+  }
+  ['asset', 'fin', 'debt', 'funeral', 'spouseTake', 'prior', 'priorTax'].forEach(function (id) {
+    document.getElementById(id).addEventListener('input', function () {
+      var n = num(this.value);
+      this.value = n ? n.toLocaleString('ko-KR') : '';
+      document.getElementById(id + 'Won').textContent = n ? hangul(n) : '';
+    });
+  });
+
+  function syncHeirs() {
+    var v = document.getElementById('heirs').value;
+    document.getElementById('spouseField').hidden = (v === 'childrenOnly');
+    document.getElementById('childField').hidden = (v === 'spouseOnly');
+  }
+  document.getElementById('heirs').addEventListener('change', syncHeirs);
+  syncHeirs();
+
+  function calcTax(base) {
+    for (var i = 0; i < BR.length; i++) {
+      if (base <= BR[i][0]) return { tax: Math.max(0, base * BR[i][1] - BR[i][2]), rate: BR[i][1], deduct: BR[i][2] };
+    }
+    return { tax: 0, rate: 0, deduct: 0 };
+  }
+
+  // 금융재산 상속공제 (제22조)
+  function finDeduct(net) {
+    if (net <= 0) return 0;
+    if (net <= 20000000) return net;
+    return Math.min(Math.max(net * 0.2, 20000000), FIN_MAX);
+  }
+
+  var FACTORS = [
+    ['배우자가 재산을 얼마나 받을지 아직 정하지 않았나요?', '배우자 상속공제는 <b>배우자가 실제로 받은 금액</b>을 기준으로, 법정상속분 한도(최대 30억원) 안에서 공제합니다. 누가 얼마를 받을지에 따라 세금이 크게 달라집니다. 신고기한 다음날부터 9개월 안에 분할을 마치고 신고해야 공제가 적용됩니다(제19조제2항).'],
+    ['돌아가시기 전 10년 안에 가족에게 증여한 재산이 있나요?', '상속인에게 준 것은 10년, 그 밖의 사람에게 준 것은 5년까지 상속재산에 다시 합산합니다(제13조). 그때 낸 증여세는 증여세액공제로 빼주지만, <b>상속세 과세가액이 5억원 이하면 공제하지 않습니다</b>(제28조).'],
+    ['상속재산 중 부동산이나 비상장주식이 있나요?', '신고가액이 아니라 <b>시가</b>로 평가해야 합니다. 감정평가를 받는지, 기준시가를 쓰는지에 따라 과세가액 자체가 달라지고 세금 차이가 큽니다.'],
+    ['돌아가시기 전 재산을 처분하거나 예금을 인출한 적이 있나요?', '상속개시일 전 1년 안에 2억원, 2년 안에 5억원 이상 처분·인출·채무부담이 있고 용도가 불분명하면 상속재산으로 추정됩니다. 이 계산기에는 반영되어 있지 않습니다.'],
+    ['피상속인과 함께 살던 주택을 상속받나요?', '10년 이상 동거 등 요건을 갖추면 동거주택 상속공제를 받을 수 있습니다. 이 계산기에는 반영되어 있지 않아, 해당되면 세금이 더 줄어들 수 있습니다.'],
+    ['가업이나 농지를 물려받나요?', '가업상속공제·영농상속공제는 공제액이 매우 크지만 업종·고용·사후관리 요건을 못 지키면 추징됩니다. 반드시 사전에 검토해야 합니다.'],
+    ['손자녀에게 바로 물려주려고 하시나요?', '자녀를 건너뛴 상속은 산출세액에 30%(손자녀가 미성년자이고 받는 재산이 20억원 초과면 40%)가 가산됩니다(제27조). 다만 자녀가 이미 사망한 대습상속이면 할증하지 않습니다.'],
+    ['한 번에 낼 현금이 부족하신가요?', '상속세는 연부연납(최대 10년, 가업상속은 더 길게)이나 물납을 신청할 수 있습니다. 신고할 때 함께 신청해야 하므로 미리 정해야 합니다.']
+  ];
+
+  var snap = null;
+
+  document.getElementById('run').addEventListener('click', function () {
+    var heirs = document.getElementById('heirs').value;
+    var hasSpouse = heirs !== 'childrenOnly';
+    var kids = heirs === 'spouseOnly' ? 0 : Number(document.getElementById('children').value);
+    var asset = num(document.getElementById('asset').value);
+    var fin = num(document.getElementById('fin').value);
+    var debt = num(document.getElementById('debt').value);
+    var funeralIn = num(document.getElementById('funeral').value);
+    var spouseTake = hasSpouse ? num(document.getElementById('spouseTake').value) : 0;
+    var prior = num(document.getElementById('prior').value);
+    var priorTaxIn = num(document.getElementById('priorTax').value);
+    var skipRatio = Number(document.getElementById('skipRatio').value);
+
+    if (!asset) { alert('상속재산가액을 입력해 주세요.'); return; }
+    if (fin > asset) { alert('순금융재산이 상속재산가액보다 큽니다. 금액을 확인해 주세요.'); return; }
+
+    // 장례비용 — 500만원 미만이면 500만원, 1천만원 초과면 1천만원 (시행령 제9조②)
+    var funeral = Math.min(Math.max(funeralIn, FUNERAL_MIN), FUNERAL_MAX);
+    // 과세가액 (제13조) — 차감액이 상속재산을 넘으면 초과분은 없는 것으로 본다
+    var minus = Math.min(debt + funeral, asset);
+    var netEstate = asset - minus;
+    var taxable = netEstate + prior;
+
+    // 인적공제 — 기초공제+자녀공제 합계와 일괄공제 5억 중 큰 금액 (배우자 단독상속은 일괄공제 배제)
+    var personalSum = BASIC + kids * PER_CHILD;
+    var personal = heirs === 'spouseOnly' ? personalSum : Math.max(personalSum, LUMP);
+    var personalLabel = heirs === 'spouseOnly'
+      ? '기초공제 2억원 + 자녀공제 (배우자 단독상속은 일괄공제 불가)'
+      : (personal === LUMP ? '일괄공제 5억원 적용' : '기초공제 2억원 + 자녀공제 ' + won(kids * PER_CHILD) + ' 적용');
+
+    // 배우자 상속공제 (제19조) — min(실제 상속액, 법정상속분 한도, 30억), 5억 미만이면 5억
+    var spouseDeduct = 0, spouseLimit = 0, spouseNote = '';
+    if (hasSpouse) {
+      var share = 1.5 / (1.5 + kids);
+      spouseLimit = Math.min((netEstate + prior) * share, SPOUSE_MAX);
+      if (spouseTake < SPOUSE_MIN) {
+        spouseDeduct = SPOUSE_MIN;
+        spouseNote = '실제 상속액이 5억원 미만이라 최저 5억원 적용';
+      } else {
+        spouseDeduct = Math.min(spouseTake, spouseLimit);
+        spouseDeduct = Math.max(spouseDeduct, SPOUSE_MIN);
+        spouseNote = kids
+          ? '법정상속분 한도 ' + won(spouseLimit) + ' (배우자 1.5 : 자녀 각 1)'
+          : '배우자가 단독 상속하므로 한도는 상속재산 전액 (최대 30억원)';
+      }
+    }
+
+    var financial = finDeduct(fin);
+    var deductTotal = personal + spouseDeduct + financial;
+    var base = Math.max(0, taxable - deductTotal);
+    var c = calcTax(base);
+    var skipTax = c.tax * skipRatio * 0.3;                       // 세대생략 할증 (제27조)
+    var gross = c.tax + skipTax;
+    // 증여세액공제 — 과세가액 5억원 이하면 적용하지 않는다 (제28조①)
+    var giftCredit = taxable > 500000000 ? Math.min(priorTaxIn, gross) : 0;
+    var fileCredit = (gross - giftCredit) * 0.03;                // 신고세액공제 (제69조)
+    var payable = Math.max(0, gross - giftCredit - fileCredit);
+
+    var rows = [];
+    rows.push(['상속인 구성', heirs === 'spouseChildren' ? '배우자 + 자녀 ' + kids + '명' : (heirs === 'childrenOnly' ? '자녀 ' + kids + '명 (배우자 없음)' : '배우자 단독')]);
+    rows.push(['상속재산가액', won(asset)]);
+    if (debt) rows.push(['(-) 채무 · 공과금', won(debt)]);
+    rows.push(['(-) 장례비용', won(funeral) + (funeralIn !== funeral ? ' <small>(한도 적용)</small>' : '')]);
+    if (prior) rows.push(['(+) 사전증여 재산', won(prior)]);
+    rows.push(['상속세 과세가액', won(taxable)]);
+    rows.push(['(-) 기초 · 인적 또는 일괄공제', won(personal) + ' <small>(' + personalLabel + ')</small>']);
+    if (hasSpouse) rows.push(['(-) 배우자 상속공제', won(spouseDeduct) + ' <small>(' + spouseNote + ')</small>']);
+    if (financial) rows.push(['(-) 금융재산 상속공제', won(financial)]);
+    rows.push(['공제 합계', won(deductTotal)]);
+    rows.push(['상속세 과세표준', won(base)]);
+    rows.push(['적용 세율', Math.round(c.rate * 100) + '% <small>(누진공제 ' + won(c.deduct) + ')</small>']);
+    rows.push(['상속세 산출세액', won(c.tax)]);
+    if (skipTax) rows.push(['(+) 세대생략 할증세액', won(skipTax) + ' <small>(손자녀 비율 ' + Math.round(skipRatio * 100) + '% × 30%)</small>']);
+    if (priorTaxIn && !giftCredit) rows.push(['(-) 증여세액공제', '0원 <small>(과세가액 5억원 이하로 공제 안 됨)</small>']);
+    if (giftCredit) rows.push(['(-) 증여세액공제', won(giftCredit)]);
+    rows.push(['(-) 신고세액공제 (3%)', won(fileCredit)]);
+    rows.push(['자진납부 예상세액', '<b>' + won(payable) + '</b>']);
+    rows.push(['신고 · 납부 기한', '상속개시일이 속하는 달의 말일부터 6개월 이내 <small>(피상속인이나 상속인이 외국에 주소를 둔 경우 9개월)</small>']);
+
+    var summary = base === 0
+      ? '공제 범위 안이라 낼 상속세가 없는 것으로 계산됩니다. 세금이 0원이어도 신고를 해두면 나중에 재산을 팔 때 취득가액을 인정받기 쉽습니다.'
+      : '입력하신 내용대로면 상속세 예상세액은 ' + won(payable) + '입니다. 과세가액 ' + won(taxable) + '에서 공제 ' + won(deductTotal) + '을 빼 과세표준 ' + won(base) + '에 ' + Math.round(c.rate * 100) + '% 세율이 적용되었습니다.';
+    if (hasSpouse) summary += ' 배우자가 얼마를 받는지에 따라 배우자 상속공제가 달라져 세금이 크게 바뀝니다.';
+
+    snap = {
+      heirs: rows[0][1],
+      asset: won(asset),
+      debt: debt ? won(debt) : '없음',
+      deduct: won(deductTotal),
+      base: won(base),
+      tax: won(payable)
+    };
+    show(rows, summary);
+  });
+
+  function show(rows, summary) {
+    document.getElementById('rows').innerHTML = rows.map(function (r) {
+      return '<tr><th>' + r[0] + '</th><td>' + r[1] + '</td></tr>';
+    }).join('');
+    document.getElementById('summary').textContent = summary;
+    document.getElementById('factors').innerHTML = FACTORS.map(function (f) {
+      return '<details><summary>' + f[0] + '</summary><p>' + f[1] + '</p></details>';
+    }).join('');
+    if (snap) {
+      var set = function (id, v) { var el = document.getElementById(id); if (el) el.value = v; };
+      set('h_heirs', snap.heirs);
+      set('h_asset', snap.asset);
+      set('h_debt', snap.debt);
+      set('h_deduct', snap.deduct);
+      set('h_base', snap.base);
+      set('h_tax', snap.tax);
+      set('h_result', rows.map(function (r) {
+        return r[0] + ': ' + String(r[1]).replace(/<[^>]+>/g, '');
+      }).join(' / '));
+      document.getElementById('calcSummary').textContent =
+        '함께 전달되는 내용 — ' + snap.heirs + ' · 상속재산 ' + snap.asset + ' · 공제 합계 ' + snap.deduct + ' · 과세표준 ' + snap.base + ' · 예상세액 ' + snap.tax;
+    }
+    document.getElementById('result').hidden = false;
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+})();
+</script>
+
+</main>
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <img class="foot-logo" src="../images/logo-horizontal.png" alt="성화세무회계" width="140" height="35">
+      <p>세무사 고성화 · 서울시 서초구 방배천로10, 동화빌딩 605호</p>
+      <p>Tel 010-5063-8270 · mytaxpro@naver.com</p>
+    </div>
+    <div class="foot-links">
+      <a href="https://blog.naver.com/mytaxpro" target="_blank" rel="noopener">네이버 블로그</a>
+      <a href="../columns.html">세무칼럼</a>
+      <a href="../tools/privacy.html">개인정보 처리방침</a>
+    </div>
+  </div>
+  <p class="wrap copy">© 2026 성화세무회계. 칼럼 내용은 작성 시점의 법령 기준이며, 개별 사안은 상담을 통해 확인해 주세요.</p>
+</footer>
+<div class="float-call"><a href="tel:01050638270">📞 전화 상담</a><a class="kakao" href="https://pf.kakao.com/_ibnGX/chat" target="_blank" rel="noopener">💬 카카오톡 상담</a></div>
+<script>
+// 상단 '간편계산' 소메뉴 — 누르면 펼쳐지고, 바깥을 누르거나 Esc를 누르면 닫힌다
+(function () {
+  var drops = document.querySelectorAll('.nav-drop');
+  drops.forEach(function (d) {
+    d.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { d.open = false; }); });
+  });
+  document.addEventListener('click', function (e) {
+    drops.forEach(function (d) { if (!d.contains(e.target)) d.open = false; });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') drops.forEach(function (d) { d.open = false; });
+  });
+})();
+</script>
+<script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
+<script type="text/javascript">
+if (!wcs_add) var wcs_add = {};
+wcs_add["wa"] = "1c5ac689656bdf0";
+if (window.wcs) { wcs_do(); }
+</script>
+</body>
+</html>
