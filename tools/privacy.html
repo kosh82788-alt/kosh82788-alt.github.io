@@ -21,7 +21,7 @@
 <header class="top">
   <div class="wrap top-in">
     <a class="brand" href="../index.html"><img src="../images/logo-horizontal.png" alt="성화세무회계" width="160" height="40"><small>세무사 고성화</small></a>
-    <nav><a href="../index.html#about">소개</a><a href="../index.html#services">업무분야</a><a href="../columns.html">세무칼럼</a><a href="../tools/capital-gains.html" aria-current="page">간편계산기</a><a href="../index.html#contact">상담문의</a></nav>
+    <nav><a href="../index.html#about">소개</a><a href="../index.html#services">업무분야</a><a href="../columns.html">세무칼럼</a><details class="nav-drop"><summary aria-current="page">간편계산</summary><div class="nav-menu"><a href="../tools/capital-gains.html">양도소득세</a><a href="../tools/faithful-filing.html">성실신고확인 대상</a></div></details><a href="../index.html#contact">상담문의</a></nav>
     <a class="btn btn-sm btn-kakao" href="https://pf.kakao.com/_ibnGX/chat" target="_blank" rel="noopener">카카오톡 상담</a>
   </div>
 </header>
@@ -89,6 +89,21 @@
   <p class="wrap copy">© 2026 성화세무회계. 칼럼 내용은 작성 시점의 법령 기준이며, 개별 사안은 상담을 통해 확인해 주세요.</p>
 </footer>
 <div class="float-call"><a href="tel:01050638270">📞 전화 상담</a><a class="kakao" href="https://pf.kakao.com/_ibnGX/chat" target="_blank" rel="noopener">💬 카카오톡 상담</a></div>
+<script>
+// 상단 '간편계산' 소메뉴 — 누르면 펼쳐지고, 바깥을 누르거나 Esc를 누르면 닫힌다
+(function () {
+  var drops = document.querySelectorAll('.nav-drop');
+  drops.forEach(function (d) {
+    d.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { d.open = false; }); });
+  });
+  document.addEventListener('click', function (e) {
+    drops.forEach(function (d) { if (!d.contains(e.target)) d.open = false; });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') drops.forEach(function (d) { d.open = false; });
+  });
+})();
+</script>
 <script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
 <script type="text/javascript">
 if (!wcs_add) var wcs_add = {};
