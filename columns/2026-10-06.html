@@ -112,6 +112,60 @@
     if (e.key === 'Escape') drops.forEach(function (d) { d.open = false; });
   });
 })();
+
+// 유입 경로 기록 (2026-11-24 추가)
+// 어디서 들어왔는지(UTM 또는 이전 사이트 주소)를 이 브라우저에만 저장해 두었다가,
+// 상담 신청 폼을 보낼 때만 숨은 칸으로 함께 전달한다. 계산만 하고 나가면 아무 데도 전송되지 않는다.
+(function () {
+  var KEY = 'mtp_src', TTL = 90 * 864e5;
+  function load(s) { try { return JSON.parse(window[s].getItem(KEY)); } catch (e) { return null; } }
+  function save(s, v) { try { window[s].setItem(KEY, JSON.stringify(v)); } catch (e) {} }
+  function guess(h) {
+    if (!h) return '직접방문';
+    if (/(^|\.)blog\.naver\.com/.test(h)) return 'naver_blog';
+    if (/search\.naver\.com/.test(h)) return 'naver_search';
+    if (/naver\.com/.test(h)) return 'naver';
+    if (/instagram\.com/.test(h)) return 'instagram';
+    if (/notion\.(site|so)/.test(h)) return 'notion';
+    if (/kakao/.test(h)) return 'kakao';
+    if (/google\./.test(h)) return 'google';
+    if (/daum\.net/.test(h)) return 'daum';
+    return h;
+  }
+  var q = new URLSearchParams(location.search), ref = '', host = '';
+  try { var r = new URL(document.referrer); if (r.host !== location.host) { host = r.host; ref = (r.host + r.pathname).slice(0, 200); } } catch (e) {}
+  var hasUtm = !!q.get('utm_source');
+  var now = {
+    src: (q.get('utm_source') || guess(host)).slice(0, 60),
+    med: (q.get('utm_medium') || '').slice(0, 60),
+    camp: (q.get('utm_campaign') || '').slice(0, 80),
+    cont: (q.get('utm_content') || '').slice(0, 80),
+    ref: ref, land: location.pathname, at: new Date().toISOString().slice(0, 10), t: Date.now()
+  };
+  var outside = hasUtm || !!ref;
+  var visit = load('sessionStorage');
+  if (!visit || outside) { visit = now; save('sessionStorage', visit); }
+  var first = load('localStorage');
+  if (!first || Date.now() - (first.t || 0) > TTL) { first = now; save('localStorage', first); }
+  function fmt(o) {
+    if (!o) return '';
+    var s = [o.src, o.med, o.camp, o.cont].filter(Boolean).join(' / ');
+    if (o.ref) s += ' · 이전 페이지 ' + o.ref;
+    return s + ' · 첫 화면 ' + o.land + ' · ' + o.at;
+  }
+  function put(form, name, val) {
+    var el = form.querySelector('input[name="' + name + '"]');
+    if (!el) { el = document.createElement('input'); el.type = 'hidden'; el.name = name; form.appendChild(el); }
+    el.value = val;
+  }
+  document.addEventListener('submit', function (e) {
+    var f = e.target;
+    if (!f.classList || !f.classList.contains('lead-form')) return;
+    put(f, '유입_이번방문', fmt(visit));
+    put(f, '유입_최초방문', fmt(first));
+    put(f, '유입_신청페이지', location.pathname);
+  }, true);
+})();
 </script>
 <script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
 <script type="text/javascript">

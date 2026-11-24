@@ -34,8 +34,19 @@
 
     <h2>1. 수집하는 항목과 목적</h2>
     <table class="rows"><tbody>
-      <tr><th>수집 항목</th><td style="text-align:left">이름, 연락처(휴대전화번호), 양도 예정 자산 종류, 대략적인 금액대, 문의 내용, 상담 신청 시 계산기에 입력하신 금액 정보(양도가액·취득가액·필요경비·보유기간·거주기간)와 계산 결과</td></tr>
-      <tr><th>수집 목적</th><td style="text-align:left">상담 신청에 대한 연락 및 세무 상담 안내</td></tr>
+      <tr><th>공통 항목</th><td style="text-align:left">이름, 연락처(휴대전화번호), 희망 연락 방법, 문의 내용(선택), 유입 경로 정보(아래 설명), 신청한 페이지</td></tr>
+      <tr><th>계산기별 항목</th><td style="text-align:left">신청하신 계산기의 입력값과 계산 결과, 재산 종류·예정 시기 등 간단한 상황 정보
+        <details class="privacy-more"><summary>계산기별로 자세히 보기</summary>
+          <ul>
+            <li><b>양도소득세</b> — 양도 자산 종류, 대략적인 양도 금액대, 양도 예정 시기, 계산기 입력값(자산 구분·양도가액·취득가액·필요경비·보유기간·거주기간·1세대 1주택 해당 여부·중과 선택)과 계산 결과</li>
+            <li><b>증여세</b> — 증여 재산 종류, 증여 예정 시기, 계산기 입력값(증여자와의 관계·증여재산가액·채무액·10년 내 증여재산)과 과세표준·예상세액 등 계산 결과</li>
+            <li><b>상속세</b> — 상속 재산 종류, 상속 진행 상황, 계산기 입력값(상속인 구성·상속재산가액·채무)과 공제 합계·과세표준·예상세액 등 계산 결과</li>
+            <li><b>성실신고확인 대상 판정</b> — 사업자 구분, 기장·확인 의뢰 예정 시기, 계산기 입력값(사업자 구분·업종·수입금액)과 판정 결과</li>
+            <li><b>법인전환 세금 비교</b> — 사업용 자산 보유 여부, 법인전환 예정 시기, 계산기 입력값(사업소득 과세표준·대표 급여)과 개인·법인 세금 비교 결과</li>
+          </ul>
+        </details>
+      </td></tr>
+      <tr><th>수집 목적</th><td style="text-align:left">상담 신청에 대한 연락 및 세무 상담 안내, 상담 신청이 어느 경로(블로그·검색·SNS 등)로 들어왔는지 파악하여 안내 자료를 개선</td></tr>
       <tr><th>수집 방법</th><td style="text-align:left">홈페이지 상담 신청 양식</td></tr>
       <tr><th>보유 기간</th><td style="text-align:left">상담 종료 후 1년까지 보관 후 파기 (신청자가 삭제를 요청하면 즉시 파기)</td></tr>
     </tbody></table>
@@ -43,10 +54,16 @@
 
     <p class="note">계산기에 입력하신 금액은 계산하는 동안에는 이용자의 웹브라우저 안에만 있으며 전송되지 않습니다. <b>상담 신청 버튼을 눌러 신청하실 때만</b> 상담 참고 목적으로 계산 내용이 함께 전달됩니다.</p>
 
+    <p class="note"><b>유입 경로 정보</b>란 홈페이지에 처음 들어오신 경로(네이버 블로그·검색·인스타그램 등 직전에 보신 사이트의 주소, 링크에 붙은 캠페인 표시값), 처음 보신 페이지, 방문 날짜를 말합니다. 이 정보는 이용자의 웹브라우저 저장공간(최대 90일)에만 보관되며, <b>상담 신청 버튼을 누르실 때만</b> 신청 내용과 함께 전달됩니다. 브라우저의 사이트 데이터 삭제 기능으로 언제든 지우실 수 있습니다.</p>
+
+    <h3>자동으로 수집되는 방문 통계</h3>
+    <p>사무소는 홈페이지 이용 현황을 파악하기 위해 네이버 애널리틱스를 이용합니다. 네이버 애널리틱스는 쿠키 등을 통해 방문 페이지, 방문 시간, 접속 기기·브라우저 종류, 유입 경로 같은 통계 정보를 수집하며, 사무소는 개인을 알아볼 수 없는 통계 형태로만 확인합니다. 브라우저 설정에서 쿠키 저장을 거부하실 수 있습니다.</p>
+
     <h2>2. 제3자 제공 및 처리 위탁</h2>
     <p>사무소는 수집한 개인정보를 제3자에게 제공하지 않습니다. 다만 상담 신청 접수와 보관을 위해 아래 서비스를 이용합니다.</p>
     <ul>
       <li>FormSubmit (폼 전송 서비스) — 홈페이지 상담 신청 내용을 사무소 이메일로 전달. 전달 후 사무소 이메일에만 보관합니다.</li>
+      <li>네이버 애널리틱스 (네이버 주식회사) — 홈페이지 방문 통계 분석</li>
     </ul>
 
     <h2>3. 파기 절차</h2>
@@ -67,7 +84,10 @@
 
     <div class="box disclaimer">
       <b>시행일</b>
-      <ul><li>이 방침은 2026년 9월 17일부터 적용됩니다. 내용이 바뀌면 이 페이지에 변경 사항을 안내합니다.</li></ul>
+      <ul>
+        <li>이 방침은 2026년 11월 24일부터 적용됩니다. 내용이 바뀌면 이 페이지에 변경 사항을 안내합니다.</li>
+        <li>변경 이력: 2026년 11월 24일 — 계산기별 수집 항목 구체화, 유입 경로 정보와 방문 통계(네이버 애널리틱스) 안내 추가 (이전 방침: 2026년 9월 17일 시행)</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -102,6 +122,60 @@
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') drops.forEach(function (d) { d.open = false; });
   });
+})();
+
+// 유입 경로 기록 (2026-11-24 추가)
+// 어디서 들어왔는지(UTM 또는 이전 사이트 주소)를 이 브라우저에만 저장해 두었다가,
+// 상담 신청 폼을 보낼 때만 숨은 칸으로 함께 전달한다. 계산만 하고 나가면 아무 데도 전송되지 않는다.
+(function () {
+  var KEY = 'mtp_src', TTL = 90 * 864e5;
+  function load(s) { try { return JSON.parse(window[s].getItem(KEY)); } catch (e) { return null; } }
+  function save(s, v) { try { window[s].setItem(KEY, JSON.stringify(v)); } catch (e) {} }
+  function guess(h) {
+    if (!h) return '직접방문';
+    if (/(^|\.)blog\.naver\.com/.test(h)) return 'naver_blog';
+    if (/search\.naver\.com/.test(h)) return 'naver_search';
+    if (/naver\.com/.test(h)) return 'naver';
+    if (/instagram\.com/.test(h)) return 'instagram';
+    if (/notion\.(site|so)/.test(h)) return 'notion';
+    if (/kakao/.test(h)) return 'kakao';
+    if (/google\./.test(h)) return 'google';
+    if (/daum\.net/.test(h)) return 'daum';
+    return h;
+  }
+  var q = new URLSearchParams(location.search), ref = '', host = '';
+  try { var r = new URL(document.referrer); if (r.host !== location.host) { host = r.host; ref = (r.host + r.pathname).slice(0, 200); } } catch (e) {}
+  var hasUtm = !!q.get('utm_source');
+  var now = {
+    src: (q.get('utm_source') || guess(host)).slice(0, 60),
+    med: (q.get('utm_medium') || '').slice(0, 60),
+    camp: (q.get('utm_campaign') || '').slice(0, 80),
+    cont: (q.get('utm_content') || '').slice(0, 80),
+    ref: ref, land: location.pathname, at: new Date().toISOString().slice(0, 10), t: Date.now()
+  };
+  var outside = hasUtm || !!ref;
+  var visit = load('sessionStorage');
+  if (!visit || outside) { visit = now; save('sessionStorage', visit); }
+  var first = load('localStorage');
+  if (!first || Date.now() - (first.t || 0) > TTL) { first = now; save('localStorage', first); }
+  function fmt(o) {
+    if (!o) return '';
+    var s = [o.src, o.med, o.camp, o.cont].filter(Boolean).join(' / ');
+    if (o.ref) s += ' · 이전 페이지 ' + o.ref;
+    return s + ' · 첫 화면 ' + o.land + ' · ' + o.at;
+  }
+  function put(form, name, val) {
+    var el = form.querySelector('input[name="' + name + '"]');
+    if (!el) { el = document.createElement('input'); el.type = 'hidden'; el.name = name; form.appendChild(el); }
+    el.value = val;
+  }
+  document.addEventListener('submit', function (e) {
+    var f = e.target;
+    if (!f.classList || !f.classList.contains('lead-form')) return;
+    put(f, '유입_이번방문', fmt(visit));
+    put(f, '유입_최초방문', fmt(first));
+    put(f, '유입_신청페이지', location.pathname);
+  }, true);
 })();
 </script>
 <script type="text/javascript" src="//wcs.pstatic.net/wcslog.js"></script>
